@@ -46,6 +46,15 @@ var coords = createAccessor(json, 'location.coords')
 coords.get('latitude') // 34
 ```
 
+get entire object
+```js
+coords.get()
+//  {
+//    latitude: 34,
+//    longitude: 57
+//  }
+```
+
 try mutating the json
 ```js
 var coords = createAccessor(json, 'location.coords')
@@ -59,3 +68,13 @@ json.location.coords.latitude = 31
 coords.get('latitude') // 31
 ```
 
+try mutating a subtree
+```js
+var coordsAccessor = createAccessor(json, 'location.coords')
+
+var coords = coordsAccessor.get()
+coords.latitude = 31
+
+coordsAccessor.get('latitude') // 31
+json.location.coords.latitude // 31
+```

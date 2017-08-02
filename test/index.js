@@ -32,4 +32,13 @@ describe('json-link', function () {
         assert.equal(country, 'Brasil')
     })
 
+    it('returns a reference to subtree json.location.coords.', () => {
+        var coordsAccessor = createAccessor(json, 'location.coords')
+        var coords = coordsAccessor.get()
+        coords.latitude = 29
+
+        assert.equal(coordsAccessor.get('latitude'), 29)
+        assert.equal(json.location.coords.latitude, coordsAccessor.get('latitude'))
+    })
+
 })
