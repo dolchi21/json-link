@@ -18,7 +18,7 @@ describe('json-link', function () {
         }
     }
 
-    var json$location
+    var json$location, json$location$coords
 
     it('create an accessor for json.location and get country.', () => {
         json$location = createAccessor(json, 'location')
@@ -32,6 +32,12 @@ describe('json-link', function () {
         assert.equal(country, 'Brasil')
     })
 
+    it('create an accessor for json.location.coords and get latitude.', () => {
+        json$location$coords = createAccessor(json, 'location.coords')
+        var latitude = json$location$coords.get('latitude')
+        assert.equal(latitude, 34)
+    })
+
     it('returns a reference to subtree json.location.coords.', () => {
         var coordsAccessor = createAccessor(json, 'location.coords')
         var coords = coordsAccessor.get()
@@ -39,6 +45,11 @@ describe('json-link', function () {
 
         assert.equal(coordsAccessor.get('latitude'), 29)
         assert.equal(json.location.coords.latitude, coordsAccessor.get('latitude'))
+    })
+
+    it('deleting json.location and accessing it should not throw error.', () => {
+        delete json.location
+        if (json$location$coords.get()) throw new Error('ThisShouldNoBeHere')
     })
 
 })
